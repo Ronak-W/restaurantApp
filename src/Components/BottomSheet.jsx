@@ -46,13 +46,14 @@ const styles = StyleSheet.create({
         padding: 15,
         paddingHorizontal: 25,
         borderRadius: 20,
-
+        elevation: 15
     },
     continueButton: {
         backgroundColor: 'green',
         padding: 15,
         paddingHorizontal: 25,
-        borderRadius: 20
+        borderRadius: 20,
+        elevation: 15
     },
     textStyle: {
         color: 'white',

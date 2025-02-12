@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { addToCart } from '../redux/cartSlice'
 import { useState } from 'react'
 
+
 const Card = ({ item }) => {
 
     const [addedToCart, setAddedToCart] = useState(false);
@@ -13,8 +14,8 @@ const Card = ({ item }) => {
     const dispatch = useDispatch();
 
     const handleAddToCart = () => {
-        dispatch(addToCart(item));
         setAddedToCart(true);
+        dispatch(addToCart(item));
         console.log('ADDED', item);
     }
 
@@ -23,20 +24,12 @@ const Card = ({ item }) => {
             <Image style={styles.image} source={item.image} resizeMode='cover' />
             <Text style={styles.textHeading}>{item.name}</Text>
             <Text style={styles.text}>{item.price}</Text>
-            {/* {!addedToCart ? (<TouchableOpacity onPress={() => handleAddToCart()}>
-                <AddCartButton />
-            </TouchableOpacity>) :
-                (<TouchableOpacity >
-                    <IncrementDecrementButton item={item} />
-                </TouchableOpacity>)} */}
             {!addedToCart ? (
-                <TouchableOpacity onPress={handleAddToCart}>
+                <TouchableOpacity onPress={() => handleAddToCart()}>
                     <AddCartButton />
                 </TouchableOpacity>
             ) : (
-                <TouchableOpacity>
-                    <IncrementDecrementButton item={item} />
-                </TouchableOpacity>
+                <IncrementDecrementButton item={item} />
             )}
         </View>
     )
@@ -44,7 +37,7 @@ const Card = ({ item }) => {
 
 export default Card
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     cardContainer: {
         display: 'flex',
         margin: 10,

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from '../redux/cartSlice'
 import { incrementQuantity } from '../redux/cartSlice'
 import { useState } from 'react'
+import AddCartButton from './AddCartButton'
 
 const IncrementDecrementButton = ({ item }) => {
 
@@ -16,28 +17,28 @@ const IncrementDecrementButton = ({ item }) => {
         console.log(matchItem);
     }
 
-    // const handleRemoveFromCard = () => {
-    //     dispatch(removeFromCart(matchItem.id))
-    //     console.log("QUANTITY", matchItem.quantity);
-    // }
-
     const handleRemoveFromCart = () => {
-        if (matchItem?.quantity > 1) {
-            dispatch(removeFromCart(matchItem.id));  // Decrease quantity
-        } else {
-            dispatch(removeFromCart(matchItem.id));  // Remove the item completely from cart
-        }
+        dispatch(removeFromCart(matchItem.id))
+        console.log("QUANTITY", matchItem.quantity);
     }
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.subtract} activeOpacity={0.4} onPress={() => handleRemoveFromCart()}>
-                <Text style={styles.textStyle}>-</Text>
-            </TouchableOpacity>
-            <Text style={styles.textStyle}>{matchItem ? matchItem.quantity : " "}</Text>
-            <TouchableOpacity activeOpacity={0.4} onPress={() => handleAddToCart()}>
-                <Text style={styles.textStyle}>+</Text>
-            </TouchableOpacity>
+        <View >
+
+
+            {matchItem ?
+                (<View style={styles.container}><TouchableOpacity style={styles.subtract} activeOpacity={0.4} onPress={() => handleRemoveFromCart()}>
+                    <Text style={styles.textStyle}>-</Text>
+                </TouchableOpacity>
+                    <Text style={styles.textStyle}>{matchItem ? matchItem.quantity : " "}</Text>
+                    <TouchableOpacity activeOpacity={0.4} onPress={() => handleAddToCart()}>
+                        <Text style={styles.textStyle}>+</Text>
+                    </TouchableOpacity></View>) : (
+                    <View style={styles.addCartButtonStyle}>
+                        <AddCartButton />
+                    </View>
+                )
+            }
         </View>
     )
 }
@@ -51,16 +52,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'red',
         padding: 3,
-        width: 60,
+        width: 80,
         paddingHorizontal: 5,
         justifyContent: 'space-around',
         borderRadius: 10,
         marginTop: 5
     },
     textStyle: {
-        color: 'white'
+        color: 'white',
+        fontWeight: 'bold'
     },
-    subtract: {
-
-    }
 })

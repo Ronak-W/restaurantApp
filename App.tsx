@@ -16,7 +16,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name='Home' component={HomeScreen} options={{headerShown : false}}/>
-        <Stack.Screen name='Cart' component={CartScreen}/>
+        <Stack.Screen name='Cart' component={CartScreen} options={{headerStyle : {backgroundColor : 'black'}, headerTintColor : 'white'}}/>
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

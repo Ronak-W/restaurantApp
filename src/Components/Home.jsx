@@ -1,20 +1,54 @@
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated } from 'react-native'
+import React, { useState } from 'react'
 import Card from './Card'
 import { footItems } from '../foodItems'
-import { useNavigation } from '@react-navigation/native'
+import BottomSheet from './BottomSheet'
+import { useSelector } from 'react-redux'
 
 const Home = () => {
 
-    const navigation = useNavigation();
+    const [isVisible, setIsVisible] = useState(false);
+    const [opacity, setOpacity] = useState(0);
+    const translateY = new Animated.Value(1000);
+
+    const cart = useSelector((state) => state.cart);
+    const totalItems = cart.length;
+
+
+    const openBottomSheet = () => {
+        setIsVisible(true);
+        setOpacity(0.5);
+        Animated.timing(translateY, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true,
+        }).start();
+        console.log("CLICKED");
+    }
+
+    const closeBottomSheet = () => {
+        Animated.timing(translateY, {
+            toValue: 1000,
+            duration: 300,
+            useNativeDriver: true,
+        }).start(() => {
+            setIsVisible(false);
+            setOpacity(0);
+        });
+    }
 
     return (
         <View style={styles.mainContainer}>
             <View style={styles.imageContainer}>
                 <Image style={styles.image} source={require('../assests/images/coverImage.jpg')} resizeMode='cover' />
                 <View style={styles.overlay}>
-                    <TouchableOpacity activeOpacity={0.3} onPress={() => navigation.navigate('Cart')}>
-                        <Image style={styles.cartIcon} source={require('../assests/images/cart.png')} />
+                    <TouchableOpacity activeOpacity={0.3} onPress={() => openBottomSheet()}>
+                        <View>
+                            <Image style={styles.cartIcon} source={require('../assests/images/cart.png')} />
+                            <View style={styles.cartCounter}>
+                                <Text>{totalItems}</Text>
+                            </View>
+                        </View>
                     </TouchableOpacity>
                     {/* <Text style={styles.overlayText}>Different Kind of Food</Text> */}
                 </View>
@@ -30,6 +64,18 @@ const Home = () => {
                 numColumns={3}
                 contentContainerStyle={styles.flatListContent}
             />
+
+            {/* {isVisible && (
+                <View style={[styles.overlayBackground, { opacity }]}></View>
+            )} */}
+
+            {isVisible && (
+                <Animated.View style={{ transform: [{ translateY }] }}>
+                    <BottomSheet onCancel={closeBottomSheet} />
+                </Animated.View>
+            )
+            }
+
         </View>
     )
 }
@@ -85,14 +131,25 @@ const styles = StyleSheet.create({
         right: 0,
         height: 40,
         width: 40,
+    },
+    cartCounter: {
+        position: 'absolute',
+        top: 15,
+        right: 20,
+        backgroundColor: 'white',
+        padding: 3,
+        paddingHorizontal: 8,
+        borderRadius: 50
     }
-    // overlayText: {
-    //     color: 'white',
-    //     fontSize: 26,
-    //     fontWeight: 'bold',
-    //     textAlign: 'center',
-    //     marginVertical: 130,
-    // }
+    // overlayBackground: {
+    //     position: 'absolute',
+    //     top: 0,
+    //     left: 0,
+    //     right: 0,
+    //     bottom: 0,
+    //     backgroundColor: 'black', // Dim the background with black
+    //     // zIndex: 999,
+    // },
 
 })
 

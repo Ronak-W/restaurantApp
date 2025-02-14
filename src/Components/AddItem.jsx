@@ -19,8 +19,6 @@ const AddItem = ({ item }) => {
         price: item ? item.price : ''
     });
 
-    const [isImage, setIsImage] = useState(false);
-
     //for updating the form items item should be visible already
     useEffect(() => {
         if (item) {
@@ -43,6 +41,20 @@ const AddItem = ({ item }) => {
 
     const handleAddItem = () => {
 
+        if (!formData.name || !formData.image || !formData.price) {
+            // Alert.alert("Please fill all the credentials");
+            Alert.alert(
+                "Invalid Input!",
+                "Please fill all the fields",
+                [
+                    {
+                        text: "OK",
+                    }
+                ]
+            );
+            return;
+        }
+
         // console.log("FORM DATA BEFORE DISPATCH", formData);
 
         if (item && item.id) {
@@ -50,13 +62,13 @@ const AddItem = ({ item }) => {
             // console.log("UPDATEE DATA");
             Alert.alert("Food Item Updated Successfully!")
             navigation.navigate('Home')
-        } else if (item) {
+        } else {
             dispatch(addData(formData));
             Alert.alert("Food Item Added Successfully")
             navigation.navigate('Home');
-        } else {
-            Alert.alert("Please Enter All Details!")
         }
+
+
 
         setFormData({
             name: '',
@@ -67,7 +79,7 @@ const AddItem = ({ item }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.textStyle}>Add Item</Text>
+            <Text style={styles.textStyle}>Enter Food Details:</Text>
 
 
             {formData.image ?
@@ -99,7 +111,6 @@ const AddItem = ({ item }) => {
                 placeholderTextColor="#aaa"
                 value={formData.price}
                 onChangeText={(text) => handleInputChange('price', text)}
-            // keyboardType="numeric"
             />
 
             <TouchableOpacity style={styles.addButton} onPress={() => handleAddItem()}>

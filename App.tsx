@@ -20,7 +20,15 @@ const App = () => {
         <Stack.Screen name='Login' component={LoginScreen} options={{headerShown : false}}/>
         <Stack.Screen name='Home' component={HomeScreen} options={{headerShown : false}}/>
         <Stack.Screen name='Cart' component={CartScreen} options={{headerStyle : {backgroundColor : 'black'}, headerTintColor : 'white'}}/>
-        <Stack.Screen name='ItemForm' component={AddItemScreen} options={{headerStyle:{backgroundColor:'black'}, headerTintColor:'white'}}/>
+        <Stack.Screen name='ItemForm' component={AddItemScreen} options={
+            {
+            headerStyle:{backgroundColor:'black'}, 
+            headerTintColor:'white',
+            title : "Add Food Item"
+            }
+          }
+          
+          />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

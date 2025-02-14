@@ -60,7 +60,7 @@ const Home = () => {
     return (
         <View style={styles.mainContainer}>
             <View style={styles.imageContainer}>
-                <Image style={styles.image} source={require('../assests/images/coverImage.jpg')} resizeMode='cover' />
+                <Image style={styles.image} source={require('../assests/images/Media.jpg')} resizeMode='cover' />
                 {/* <Image style={styles.image} source={{ uri: "https://t3.ftcdn.net/jpg/02/52/38/80/360_F_252388016_KjPnB9vglSCuUJAumCDNbmMzGdzPAucK.jpg" }} resizeMode='cover' /> */}
                 <View style={styles.overlay}>
                     <View style={styles.userAdminIcon}>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(255, 0, 0, 0.4)',
+        backgroundColor: 'rgba(236, 72, 72, 0.3)',
         borderBottomLeftRadius: 40,
         borderBottomRightRadius: 40,
     },
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     listStyle: {
         flex: 1,
         alignSelf: 'center',
+        marginBottom: 20
     },
     cartIcon: {
         position: 'absolute',

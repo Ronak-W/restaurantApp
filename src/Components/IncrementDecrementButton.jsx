@@ -2,8 +2,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from '../redux/cartSlice'
-import { incrementQuantity } from '../redux/cartSlice'
-import { useState } from 'react'
 import AddCartButton from './AddCartButton'
 
 const IncrementDecrementButton = ({ item }) => {
@@ -14,12 +12,10 @@ const IncrementDecrementButton = ({ item }) => {
     const handleAddToCart = () => {
         dispatch(addToCart(item));
         // console.log('ADDED', item);
-        console.log(matchItem);
     }
 
     const handleRemoveFromCart = () => {
         dispatch(removeFromCart(matchItem.id))
-        console.log("QUANTITY", matchItem.quantity);
     }
 
     return (

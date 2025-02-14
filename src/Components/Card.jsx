@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import AddCartButton from './AddCartButton'
 import IncrementDecrementButton from './IncrementDecrementButton'
@@ -29,16 +29,31 @@ const Card = ({ item }) => {
 
     }, [cart, item.id])
 
-    const handleAddToCart = () => {
-        dispatch(addToCart(item));
-        setAddedToCart(true);
-        console.log('ADDED', item);
-    }
+    // const handleAddToCart = () => {
+    //     dispatch(addToCart(item));
+    //     setAddedToCart(true);
+    //     console.log('ADDED', item);
+    // }
 
 
     const handleDelete = (id) => {
+        Alert.alert(
+            "Delete!",
+            "Are you sure?",
+            [
+                {
+                    text: "Yes",
+                    onPress: () => dispatch(deleteData(id))
+                },
+                {
+                    text: 'No',
+                    // onPress: () => 
+                    // style: 'cancel'
+                }
+            ]
+        )
         console.log("DELETE ID", id);
-        dispatch(deleteData(id));
+        // dispatch(deleteData(id));
     }
 
     return (
@@ -48,9 +63,11 @@ const Card = ({ item }) => {
                 <Text style={styles.textHeading}>{item.name}</Text>
                 <Text style={styles.text}>₹ {item.price}</Text>
 
+                {/* onPress={() => handleAddToCart()} */}
+
                 {loggedInUser.user === 'user' && (
                     !addedToCart ? (
-                        <TouchableOpacity onPress={() => handleAddToCart()}>
+                        <TouchableOpacity >
                             <AddCartButton item={item} />
                         </TouchableOpacity>
                     ) : (

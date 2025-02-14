@@ -5,6 +5,7 @@ import IncrementDecrementButton from './IncrementDecrementButton';
 import AddCartButton from './AddCartButton';
 import { useDispatch } from 'react-redux';
 import { clearCart } from '../redux/cartSlice';
+import { Alert } from 'react-native';
 
 
 const Cart = () => {
@@ -17,7 +18,21 @@ const Cart = () => {
     const dispatch = useDispatch();
 
     const handleClearCart = () => {
-        dispatch(clearCart());
+        Alert.alert(
+            "Clear Cart",
+            "Are you sure?",
+            [
+                {
+                    text: "yes",
+                    onPress: () => dispatch(clearCart())
+                },
+                {
+                    text: "No",
+                    style: "cancel"
+                }
+            ]
+        )
+
         console.log("CLEAR CART");
     }
 

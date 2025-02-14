@@ -9,7 +9,7 @@ import AddCartButton from './AddCartButton'
 const IncrementDecrementButton = ({ item }) => {
 
     const dispatch = useDispatch();
-    const matchItem = useSelector((state) => state.cart.find(newItem => newItem.id === item.id));
+    const matchItem = useSelector((state) => state.cart.cart.find(newItem => newItem.id === item.id));
 
     const handleAddToCart = () => {
         dispatch(addToCart(item));
@@ -24,8 +24,6 @@ const IncrementDecrementButton = ({ item }) => {
 
     return (
         <View >
-
-
             {matchItem ?
                 (<View style={styles.container}><TouchableOpacity style={styles.subtract} activeOpacity={0.4} onPress={() => handleRemoveFromCart()}>
                     <Text style={styles.textStyle}>-</Text>
@@ -35,7 +33,7 @@ const IncrementDecrementButton = ({ item }) => {
                         <Text style={styles.textStyle}>+</Text>
                     </TouchableOpacity></View>) : (
                     <View style={styles.addCartButtonStyle}>
-                        <AddCartButton />
+                        <AddCartButton item={item} />
                     </View>
                 )
             }
@@ -51,7 +49,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'red',
-        padding: 3,
+        padding: 5,
         width: 80,
         paddingHorizontal: 5,
         justifyContent: 'space-around',

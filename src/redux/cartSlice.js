@@ -19,11 +19,11 @@ const cartSlice = createSlice({
                     quantity : 1,
                 });
                 state.totalItems++;
-                state.totalPrice += item.price;
+                state.totalPrice += Number(item.price);
             }else{
                 cartId.quantity++;
                 state.totalItems++;
-                state.totalPrice += item.price;
+                state.totalPrice += Number(item.price);
             }
         },
 
@@ -32,24 +32,27 @@ const cartSlice = createSlice({
         const index = state.cart.findIndex((item) => item.id === itemId);
     
         if (index >= 0) {
-            const product = state.cart[index];  // Get the product at the index
+            const product = state.cart[index];  
             
             if (product.quantity > 1) {
-                // Decrease quantity if more than 1
                 product.quantity--;
-                state.totalItems--; // Decrease total items count
-                state.totalPrice -= product.price; // Decrease total price by the price of 1 unit of the product
+                state.totalItems--; 
+                state.totalPrice -= Number(product.price); 
             } else {
-                // If the quantity is 1, remove the product from the cart
                 state.cart.splice(index, 1);
-                state.totalItems--; // Decrease total items count
-                state.totalPrice -= product.price; // Decrease total price by the price of 1 unit of the product
+                state.totalItems--; 
+                state.totalPrice -= Number(product.price); 
             }
         }
+    }, 
+    clearCart : (state) => {
+        // const cartToClear = action.payload;
+        state.cart = [];
+        state.totalItems = 0;
+        state.totalPrice = 0;
     }
-    
 }
 })
 
-export const {addToCart, removeFromCart} = cartSlice.actions;
+export const {addToCart, removeFromCart, clearCart} = cartSlice.actions;
 export default cartSlice.reducer;

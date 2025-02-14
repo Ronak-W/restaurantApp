@@ -1,0 +1,88 @@
+{
+  "foodItems": [
+    {
+      "id": "1",
+      "name": "Burger",
+      "image": "https://www.foodrepublic.com/wp-content/uploads/2012/03/033_FR11785.jpg",
+      "price": "120"
+    },
+    {
+      "name": "Pizza",
+      "image": "https://th.bing.com/th/id/R.697e50f9cf7c083b5d475cfaabbf4fe5?rik=PZE4EGYHytXIgA&riu=http%3a%2f%2f2.bp.blogspot.com%2f-xKZmaz86O8o%2fUxC9_-NJSnI%2fAAAAAAAAAcI%2fkU_TsyBSR80%2fs1600%2fpizza.jpg&ehk=0OjsRK5Kd0K3TyzZ7vie55o3X5LXb6ZGaORv0pa2mDc%3d&risl=&pid=ImgRaw&r=0",
+      "price": "400",
+      "id": "2"
+    },
+    {
+      "id": "3",
+      "name": "Sandwich",
+      "image": "https://chefeel.com/chefgeneralfiles/2022/09/high-angle-delicious-sandwiches-arrangement-scaled.jpg",
+      "price": "80.5"
+    },
+    {
+      "id": "4",
+      "name": "Noodles",
+      "image": "https://th.bing.com/th/id/OIP.27L-qHql8mWfPol_5YY4vQHaFj?rs=1&pid=ImgDetMain",
+      "price": "40.99"
+    },
+    {
+      "id": "5",
+      "name": "Sushi",
+      "image": "https://th.bing.com/th/id/OIP.OKQX3YsEhP7i_LKtNjJCxAHaE8?rs=1&pid=ImgDetMain",
+      "price": "250"
+    },
+    {
+      "id": "6",
+      "name": "Chicken Wings",
+      "image": "https://th.bing.com/th/id/OIP.AaRqm19npjng1sKYCBUMwwAAAA?rs=1&pid=ImgDetMain",
+      "price": "150"
+    },
+    {
+      "id": "7",
+      "name": "Dosa",
+      "image": "https://i1.wp.com/www.evergreendishes.com/wp-content/uploads/2019/10/Dosa-1.jpg?fit=4288%2C2848&ssl=1",
+      "price": "500"
+    },
+    {
+      "id": "8",
+      "name": "Pancakes",
+      "image": "https://www.inspiredtaste.net/wp-content/uploads/2016/07/Pancake-Recipe-2-1200.jpg",
+      "price": "60"
+    },
+    {
+      "name": "Chicken thali",
+      "image": "https://img.freepik.com/premium-photo/special-chicken-thali-from-indian-cuisine-food-platter-consists-chicken-curry-lentils-jeera-rice-roti-onions-selective-focus_726363-1252.jpg?w=2000",
+      "price": "150",
+      "id": "9"
+    },
+    {
+      "name": "Vada Pav",
+      "image": "https://wallpaperaccess.com/full/4815496.jpg",
+      "price": "20.0",
+      "id": "10"
+    },
+    {
+      "name": "Pav Bhaji",
+      "image": "https://www.cubesnjuliennes.com/wp-content/uploads/2020/07/Instant-Pot-Mumbai-Pav-Bhaji-Recipe.jpg",
+      "price": "120.0",
+      "id": "11"
+    },
+    {
+      "id": "8ff5",
+      "name": "Momos",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwnSOHKzHUmsoU3bXAdDXgILZ1Q1GXKpEnw4SOIyI_5-r2bRV1UHAlIOik&s=10",
+      "price": "80.0"
+    },
+    {
+      "id": "05fb",
+      "name": "Frankie",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIqRUjTtqxtdG2djZQ0LWp781Esubj49s3p60SCTahbLJ0QoN_BQsyMrM&s=10",
+      "price": "60"
+    },
+    {
+      "id": "bbe6",
+      "name": "Pani puri",
+      "image": "https://www.sidechef.com/recipe/3883dffb-5fa2-4ee9-8054-d8de1409899f.jpg?d=1408x1120",
+      "price": "30.0"
+    }
+  ]
+}

@@ -1,23 +1,44 @@
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated, } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Card from './Card'
-import { footItems } from '../foodItems'
 import BottomSheet from './BottomSheet'
 import { useSelector } from 'react-redux'
+import { useFocusEffect } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
+import { fetchData } from '../redux/fetchDataSlice'
+import { useNavigation } from '@react-navigation/native'
 
 const Home = () => {
 
     const [isVisible, setIsVisible] = useState(false);
-    const [opacity, setOpacity] = useState(0);
     const translateY = new Animated.Value(1000);
 
+    //cart from store
     const cart = useSelector((state) => state.cart);
-    const totalItems = cart.length;
+    //all data from store
+    const fetchedData = useSelector(state => state.fetch.foodItems);
 
+    const loggedInUser = useSelector(state => state.user)
+    // console.log("LOGGED IN USER", loggedInUser);
+
+    const dispatch = useDispatch();
+    const totalItems = cart.cart.length;
+    const navigation = useNavigation();
+
+    //to fetch the data from store into the home screen
+    useEffect(() => {
+        dispatch(fetchData());
+    }, [])
+
+    //to close the bottom sheet when in focus
+    useFocusEffect(
+        React.useCallback(() => {
+            closeBottomSheet();
+        }, [])
+    )
 
     const openBottomSheet = () => {
         setIsVisible(true);
-        setOpacity(0.5);
         Animated.timing(translateY, {
             toValue: 0,
             duration: 300,
@@ -33,7 +54,6 @@ const Home = () => {
             useNativeDriver: true,
         }).start(() => {
             setIsVisible(false);
-            setOpacity(0);
         });
     }
 
@@ -41,41 +61,39 @@ const Home = () => {
         <View style={styles.mainContainer}>
             <View style={styles.imageContainer}>
                 <Image style={styles.image} source={require('../assests/images/coverImage.jpg')} resizeMode='cover' />
+                {/* <Image style={styles.image} source={{ uri: "https://t3.ftcdn.net/jpg/02/52/38/80/360_F_252388016_KjPnB9vglSCuUJAumCDNbmMzGdzPAucK.jpg" }} resizeMode='cover' /> */}
                 <View style={styles.overlay}>
-                    <TouchableOpacity activeOpacity={0.3} onPress={() => openBottomSheet()}>
-                        <View>
-                            <Image style={styles.cartIcon} source={require('../assests/images/cart.png')} />
-                            <View style={styles.cartCounter}>
-                                <Text>{totalItems}</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                    {/* <Text style={styles.overlayText}>Different Kind of Food</Text> */}
+                    <View style={styles.userAdminIcon}>
+                        <Text style={styles.userAdminText}>{loggedInUser.user === "user" ? 'U' : 'A'}</Text>
+                    </View>
                 </View>
             </View>
             <View style={styles.heading}>
                 <Text style={styles.headingText}>Food Items</Text>
+                {loggedInUser.user == 'user' && (
+                    <View>
+                        <TouchableOpacity activeOpacity={0.3} onPress={() => openBottomSheet()}>
+                            <Image style={styles.cartIcon} source={require('../assests/images/cart.png')} />
+                            <View style={styles.cartCounter}>
+                                <Text>{totalItems}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )}
             </View>
 
             <FlatList style={styles.listStyle}
-                data={footItems}
+                data={fetchedData}
                 keyExtractor={item => item.id.toString()}
                 renderItem={({ item }) => <Card item={item} />}
-                numColumns={3}
-                contentContainerStyle={styles.flatListContent}
+                numColumns={2}
             />
 
-            {/* {isVisible && (
-                <View style={[styles.overlayBackground, { opacity }]}></View>
-            )} */}
+            {isVisible && <BottomSheet onCancel={() => setIsVisible(false)} />}
 
-            {isVisible && (
-                <Animated.View style={{ transform: [{ translateY }] }}>
-                    <BottomSheet onCancel={closeBottomSheet} />
-                </Animated.View>
-            )
-            }
-
+            {loggedInUser.user === 'admin' && (<TouchableOpacity activeOpacity={0.4} onPress={() => navigation.navigate('ItemForm', { item: '' })}>
+                <Image style={styles.addIcon} source={{ uri: "https://cdn-icons-png.flaticon.com/512/4677/4677490.png" }} />
+            </TouchableOpacity>)}
         </View>
     )
 }
@@ -89,7 +107,7 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     image: {
-        height: 300,
+        height: 250,
         width: '100%',
         borderBottomLeftRadius: 40,
         borderBottomRightRadius: 40,
@@ -100,14 +118,17 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(255, 2, 2, 0.4)',
+        backgroundColor: 'rgba(255, 0, 0, 0.4)',
         borderBottomLeftRadius: 40,
         borderBottomRightRadius: 40,
     },
     heading: {
         display: 'flex',
+        flexDirection: 'row',
         alignItems: 'flex-start',
-        padding: 20
+        justifyContent: 'space-between',
+        padding: 20,
+        marginHorizontal: 10
     },
     headingText: {
         fontSize: 18,
@@ -115,42 +136,49 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Helvetica'
     },
-    listContainer: {
-        backgroundColor: 'yellow',
-    },
     listStyle: {
-        flex: 1
-    },
-    flatListContent: {
-        marginHorizontal: 10,
-        justifyContent: 'center'
+        flex: 1,
+        alignSelf: 'center',
     },
     cartIcon: {
         position: 'absolute',
-        margin: 25,
+        marginRight: 5,
+        top: 0,
         right: 0,
-        height: 40,
-        width: 40,
+        height: 35,
+        width: 35,
+        borderRadius: 20
     },
     cartCounter: {
         position: 'absolute',
-        top: 15,
-        right: 20,
+        top: 0,
+        right: 0,
         backgroundColor: 'white',
         padding: 3,
         paddingHorizontal: 8,
         borderRadius: 50
+    },
+    addIcon: {
+        position: 'absolute',
+        bottom: '0',
+        right: 0,
+        height: 100,
+        width: 100,
+        margin: 20
+    },
+    userAdminText: {
+        color: 'white',
+        fontSize: 28,
+        fontWeight: 'bold'
+    },
+    userAdminIcon: {
+        position: 'absolute',
+        margin: '20',
+        borderRadius: 40,
+        backgroundColor: 'black',
+        padding: 15,
+        paddingHorizontal: 25
     }
-    // overlayBackground: {
-    //     position: 'absolute',
-    //     top: 0,
-    //     left: 0,
-    //     right: 0,
-    //     bottom: 0,
-    //     backgroundColor: 'black', // Dim the background with black
-    //     // zIndex: 999,
-    // },
-
 })
 
 export default Home

@@ -6,6 +6,8 @@ import HomeScreen from './src/screens/HomeScreen'
 import CartScreen from './src/screens/CartScreen'
 import {store} from './src/redux/store';
 import { Provider } from 'react-redux'
+import AddItemScreen from './src/screens/AddItemScreen'
+import LoginScreen from './src/screens/LoginScreen'
 
 const App = () => {
 
@@ -14,9 +16,11 @@ const App = () => {
   return (
     <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName='Login'>
+        <Stack.Screen name='Login' component={LoginScreen} options={{headerShown : false}}/>
         <Stack.Screen name='Home' component={HomeScreen} options={{headerShown : false}}/>
         <Stack.Screen name='Cart' component={CartScreen} options={{headerStyle : {backgroundColor : 'black'}, headerTintColor : 'white'}}/>
+        <Stack.Screen name='ItemForm' component={AddItemScreen} options={{headerStyle:{backgroundColor:'black'}, headerTintColor:'white'}}/>
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

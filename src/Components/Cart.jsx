@@ -3,13 +3,23 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import IncrementDecrementButton from './IncrementDecrementButton';
 import AddCartButton from './AddCartButton';
+import { useDispatch } from 'react-redux';
+import { clearCart } from '../redux/cartSlice';
 
 
 const Cart = () => {
 
-    const cart = useSelector((state) => state.cart);
-    const totalItems = useSelector((state) => state.totalItems)
-    const totalPrice = useSelector((state) => state.totalPrice)
+    const cart = useSelector((state) => state.cart.cart);
+    console.log("CART", cart);
+
+    const totalItems = useSelector((state) => state.cart.totalItems)
+    const totalPrice = useSelector((state) => state.cart.totalPrice)
+    const dispatch = useDispatch();
+
+    const handleClearCart = () => {
+        dispatch(clearCart());
+        console.log("CLEAR CART");
+    }
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -20,7 +30,7 @@ const Cart = () => {
                     {cart.map((item) => (
                         <View key={item.id} style={styles.cartItem}>
                             <View>
-                                <Image style={styles.image} source={item.image} resizeMode='cover' />
+                                <Image style={styles.image} source={{ uri: item.image }} resizeMode='cover' />
                             </View>
                             <View>
                                 <Text style={styles.itemName}>{item.name}</Text>
@@ -32,10 +42,13 @@ const Cart = () => {
                     ))}
                     <View style={styles.totalPriceContainer}>
                         <Text style={styles.totalPriceText}>Total Items : {totalItems}</Text>
-                        <Text style={styles.totalPriceText}>Total Price: ₹{totalPrice.toFixed(2)}</Text>
+                        <Text style={styles.totalPriceText}>Total Price: ₹{parseInt(totalPrice).toFixed(2)}</Text>
                     </View>
 
-                    <View style={{ display: 'flex', alignItems: 'center' }}>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => handleClearCart()} style={styles.clearButton}>
+                            <Text style={styles.paymentText}>Clear Cart</Text>
+                        </TouchableOpacity>
                         <TouchableOpacity style={styles.paymentButton}>
                             <Text style={styles.paymentText}>Payment</Text>
                         </TouchableOpacity>
@@ -110,7 +123,17 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: 'green',
         borderRadius: 20,
-        width: 300,
+        width: 150,
+        alignItems: 'center',
+        marginTop: 20,
+        elevation: 50,
+    },
+    clearButton: {
+        display: 'flex',
+        padding: 20,
+        backgroundColor: 'red',
+        borderRadius: 20,
+        width: 150,
         alignItems: 'center',
         marginTop: 20,
         elevation: 50,
@@ -118,5 +141,10 @@ const styles = StyleSheet.create({
     paymentText: {
         color: 'white',
         fontWeight: 'bold'
+    },
+    buttonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around'
     }
 })

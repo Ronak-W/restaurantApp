@@ -1,9 +1,20 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../redux/cartSlice'
 
-const AddCartButton = () => {
+const AddCartButton = ({ item }) => {
+
+    const dispatch = useDispatch();
+
+    const handleAddToCart = () => {
+        dispatch(addToCart(item));
+        // setAddedToCart(true);
+        console.log('ADDED', item);
+    }
+
     return (
-        <TouchableOpacity style={styles.container} activeOpacity={0.4}>
+        <TouchableOpacity style={styles.container} activeOpacity={0.4} onPress={() => handleAddToCart()}>
             <Text style={styles.text}>Add</Text>
         </TouchableOpacity>
     )
@@ -16,13 +27,13 @@ const styles = StyleSheet.create({
         display: 'flex',
         backgroundColor: '#e55d2a',
         alignItems: 'center',
-        justifyContent: 'center',
-        width: 50,
+        width: 60,
         borderRadius: 10,
-        padding: 3,
+        padding: 5,
         marginTop: 5
     },
     text: {
-        color: 'white'
+        color: 'white',
+        fontWeight: 'bold'
     }
 })

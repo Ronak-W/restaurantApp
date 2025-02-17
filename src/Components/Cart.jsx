@@ -33,7 +33,7 @@ const Cart = () => {
             ]
         )
 
-        console.log("CLEAR CART");
+        // console.log("CLEAR CART");
     }
 
     return (

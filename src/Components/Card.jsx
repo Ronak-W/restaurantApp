@@ -3,7 +3,6 @@ import React from 'react'
 import AddCartButton from './AddCartButton'
 import IncrementDecrementButton from './IncrementDecrementButton'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../redux/cartSlice'
 import { useState, useEffect } from 'react'
 import { deleteData } from '../redux/fetchDataSlice'
 import { useNavigation } from '@react-navigation/native'
@@ -29,12 +28,6 @@ const Card = ({ item }) => {
 
     }, [cart, item.id])
 
-    // const handleAddToCart = () => {
-    //     dispatch(addToCart(item));
-    //     setAddedToCart(true);
-    //     console.log('ADDED', item);
-    // }
-
 
     const handleDelete = (id) => {
         Alert.alert(
@@ -47,13 +40,10 @@ const Card = ({ item }) => {
                 },
                 {
                     text: 'No',
-                    // onPress: () => 
-                    // style: 'cancel'
                 }
             ]
         )
-        console.log("DELETE ID", id);
-        // dispatch(deleteData(id));
+        // console.log("DELETE ID", id);
     }
 
     return (
@@ -62,8 +52,6 @@ const Card = ({ item }) => {
                 <Image style={styles.image} source={{ uri: item.image }} resizeMode='cover' />
                 <Text style={styles.textHeading}>{item.name}</Text>
                 <Text style={styles.text}>₹ {item.price}</Text>
-
-                {/* onPress={() => handleAddToCart()} */}
 
                 {loggedInUser.user === 'user' && (
                     !addedToCart ? (
@@ -77,13 +65,13 @@ const Card = ({ item }) => {
 
                 {loggedInUser.user === 'admin' && <View style={styles.updateDeleteButtonContainer}>
                     <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.id)}>
-                        <Text style={styles.text}>Delete</Text>
+                        <Text style={styles.btntext}>Delete</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.updateButton}
                         onPress={() => {
                             navigation.navigate('ItemForm', { item });
                         }}>
-                        <Text style={styles.text}>Update</Text>
+                        <Text style={styles.btntext}>Update</Text>
                     </TouchableOpacity>
                 </View>}
             </View>
@@ -115,14 +103,18 @@ export const styles = StyleSheet.create({
     },
     text: {
         color: 'white',
-        marginTop: 3
+        marginTop: 3,
+    },
+    btntext: {
+        color: 'white',
+        marginTop: 3,
+        fontWeight: 'bold'
     },
     updateDeleteButtonContainer: {
         display: 'flex',
         justifyContent: 'space-around',
         flexDirection: 'row',
         marginTop: 10,
-        // backgroundColor: 'yellow'
     },
     deleteButton: {
         padding: 10,

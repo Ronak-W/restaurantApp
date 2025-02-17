@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 
 const Home = () => {
 
+    //for bottomsheet
     const [isVisible, setIsVisible] = useState(false);
     const translateY = new Animated.Value(1000);
 
@@ -44,7 +45,6 @@ const Home = () => {
             duration: 300,
             useNativeDriver: true,
         }).start();
-        console.log("CLICKED");
     }
 
     const closeBottomSheet = () => {
@@ -71,6 +71,7 @@ const Home = () => {
             <View style={styles.heading}>
                 <Text style={styles.headingText}>Food Items</Text>
                 {loggedInUser.user == 'user' && (
+                    //cart
                     <View>
                         <TouchableOpacity activeOpacity={0.3} onPress={() => openBottomSheet()}>
                             <Image style={styles.cartIcon} source={require('../assests/images/cart.png')} />
@@ -89,9 +90,11 @@ const Home = () => {
                 numColumns={2}
             />
 
+            {/* bottom sheet */}
             {isVisible && <BottomSheet onCancel={() => setIsVisible(false)} />}
 
-            {loggedInUser.user === 'admin' && (<TouchableOpacity activeOpacity={0.4} onPress={() => navigation.navigate('ItemForm', { item: '' })}>
+            {/* Add Icon for admin */}
+            {loggedInUser.user === 'admin' && (<TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('ItemForm', { item: '' })}>
                 <Image style={styles.addIcon} source={{ uri: "https://cdn-icons-png.flaticon.com/512/4677/4677490.png" }} />
             </TouchableOpacity>)}
         </View>

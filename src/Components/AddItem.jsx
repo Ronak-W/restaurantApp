@@ -31,7 +31,6 @@ const AddItem = ({ item }) => {
     }, [item]);
 
     const handleInputChange = (field, value) => {
-
         setFormData((prevData) => ({
             ...prevData,
             [field]: value
@@ -40,9 +39,7 @@ const AddItem = ({ item }) => {
     };
 
     const handleAddItem = () => {
-
         if (!formData.name || !formData.image || !formData.price) {
-            // Alert.alert("Please fill all the credentials");
             Alert.alert(
                 "Invalid Input!",
                 "Please fill all the fields",
@@ -55,8 +52,7 @@ const AddItem = ({ item }) => {
             return;
         }
 
-        // console.log("FORM DATA BEFORE DISPATCH", formData);
-
+        //to update if item and it's id is present 
         if (item && item.id) {
             dispatch(updateData({ ...formData, id: item.id }));
             // console.log("UPDATEE DATA");
@@ -68,8 +64,6 @@ const AddItem = ({ item }) => {
             navigation.navigate('Home');
         }
 
-
-
         setFormData({
             name: '',
             image: '',
@@ -80,7 +74,6 @@ const AddItem = ({ item }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.textStyle}>Enter Food Details:</Text>
-
 
             {formData.image ?
                 (

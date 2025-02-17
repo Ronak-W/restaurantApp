@@ -61,16 +61,28 @@
       "id": "11"
     },
     {
-      "id": "8ff5",
       "name": "Momos",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwnSOHKzHUmsoU3bXAdDXgILZ1Q1GXKpEnw4SOIyI_5-r2bRV1UHAlIOik&s=10",
-      "price": "80.0"
+      "price": "120.0",
+      "id": "8ff5"
     },
     {
-      "id": "05fb",
       "name": "Frankie",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIqRUjTtqxtdG2djZQ0LWp781Esubj49s3p60SCTahbLJ0QoN_BQsyMrM&s=10",
-      "price": "60"
+      "price": "50.0",
+      "id": "05fb"
+    },
+    {
+      "id": "1c06",
+      "name": "Samosa",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiL6zM7aFEbHoijjl6sb6qMlksbeudwC7gEoZRYZ2LsG1fEnxY43MDJC-t&s=10",
+      "price": "20.0"
+    },
+    {
+      "id": "6e79",
+      "name": "Poha",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAgoyaOo6lfIyZcmRjaHsgbgK6LGEcmQ0J6hM7pt5aKkbck4KOZ6kPK70&s=10",
+      "price": "30.0"
     }
   ]
 }

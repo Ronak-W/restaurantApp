@@ -27,7 +27,8 @@ const IncrementDecrementButton = ({ item }) => {
                     <Text style={styles.textStyle}>{matchItem ? matchItem.quantity : " "}</Text>
                     <TouchableOpacity activeOpacity={0.4} onPress={() => handleAddToCart()}>
                         <Text style={styles.textStyle}>+</Text>
-                    </TouchableOpacity></View>) : (
+                    </TouchableOpacity></View>
+                ) : (
                     <View style={styles.addCartButtonStyle}>
                         <AddCartButton item={item} />
                     </View>

@@ -28,7 +28,7 @@ export const updateData = createAsyncThunk('Update Data', async (item) => {
     const {id, name, image, price} = item;
     // console.log("UPDATE DATA", id, name, image, price);
     try {
-        console.log('UPDATED ITEM', item);
+        // console.log('UPDATED ITEM', item);
         const response = await axios.put(`http://172.16.0.104:3000/foodItems/${id}`, {name, image,price})
         return response.data;
     } catch (error) {
@@ -50,15 +50,18 @@ const fetchSlice = createSlice({
     name : 'fetch data',
     initialState ,
     extraReducers: builder => {
+        // fetch
         builder.addCase(fetchData.fulfilled, (state,action) => {
-            console.log("from slice",action.payload)
+            // console.log("from slice",action.payload)
             state.foodItems = action.payload
         })
         
+        // Add
         builder.addCase(addData.fulfilled, (state,action) => {
             state.foodItems.push(action.payload);
         })
 
+        // Update
         builder.addCase(updateData.fulfilled, (state,action) => {
             const updatedItem = action.payload;
             const index = state.foodItems.findIndex((item) => item.id === updatedItem.id);
@@ -67,6 +70,7 @@ const fetchSlice = createSlice({
             }
         })
     
+        // delete
         builder.addCase(deleteData.fulfilled, (state, action) =>{
             state.foodItems = state.foodItems.filter((item) => item.id !== action.payload.id);
         })

@@ -9,8 +9,7 @@ const AddCartButton = ({ item }) => {
 
     const handleAddToCart = () => {
         dispatch(addToCart(item));
-        // setAddedToCart(true);
-        console.log('ADDED', item);
+        // console.log('ADDED', item);
     }
 
     return (

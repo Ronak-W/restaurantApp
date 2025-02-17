@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated, } from 'react-native'
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated, Alert, } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Card from './Card'
 import BottomSheet from './BottomSheet'
@@ -57,15 +57,35 @@ const Home = () => {
         });
     }
 
+    const handleLogout = () => {
+        Alert.alert(
+            "Logout?",
+            "Are you sure?",
+            [
+                {
+                    text: "yes",
+                    onPress: () => navigation.navigate('Login')
+                },
+                {
+                    text: "No",
+                    style: "cancel"
+                }
+            ]
+        )
+    }
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.imageContainer}>
                 <Image style={styles.image} source={require('../assests/images/Media.jpg')} resizeMode='cover' />
                 {/* <Image style={styles.image} source={{ uri: "https://t3.ftcdn.net/jpg/02/52/38/80/360_F_252388016_KjPnB9vglSCuUJAumCDNbmMzGdzPAucK.jpg" }} resizeMode='cover' /> */}
+
                 <View style={styles.overlay}>
-                    <View style={styles.userAdminIcon}>
+                    <TouchableOpacity style={styles.userAdminIcon} activeOpacity={0.7} onPress={() => handleLogout()}>
+                        {/* <View style={styles.userAdminIcon}> */}
                         <Text style={styles.userAdminText}>{loggedInUser.user === "user" ? 'U' : 'A'}</Text>
-                    </View>
+                        {/* </View> */}
+                    </TouchableOpacity>
                 </View>
             </View>
             <View style={styles.heading}>

@@ -8,12 +8,14 @@ import {store} from './src/redux/store';
 import { Provider } from 'react-redux'
 import AddItemScreen from './src/screens/AddItemScreen'
 import LoginScreen from './src/screens/LoginScreen'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 const App = () => {
 
   const Stack = createNativeStackNavigator();
 
   return (
+    <SafeAreaProvider>
     <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login'>
@@ -27,11 +29,11 @@ const App = () => {
             title : "Add Food Item"
             }
           }
-          
           />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>
+    </SafeAreaProvider>
   )
 }
   

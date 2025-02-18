@@ -8,6 +8,7 @@ import {store} from './src/redux/store';
 import { Provider } from 'react-redux'
 import AddItemScreen from './src/screens/AddItemScreen'
 import LoginScreen from './src/screens/LoginScreen'
+import PaymentScreen from './src/screens/PaymentScreen'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 const App = () => {
@@ -30,6 +31,11 @@ const App = () => {
             }
           }
           />
+          <Stack.Screen name='Payment' component={PaymentScreen} options={{headerStyle : {
+            backgroundColor : "black"
+          },
+          headerTintColor : 'white'
+          }} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react'
 import { deleteData } from '../redux/fetchDataSlice'
 import { useNavigation } from '@react-navigation/native'
 
-
 const Card = ({ item }) => {
 
     const dispatch = useDispatch();
@@ -20,14 +19,13 @@ const Card = ({ item }) => {
     useEffect(() => {
         if (cart.length > 0) {
             const itemInCart = cart?.find((cartItem) => cartItem.id === item.id);
-            console.log("ITEM IN CART", itemInCart);
+            // console.log("ITEM IN CART", itemInCart);
             if (itemInCart) {
                 setAddedToCart(true);
             }
         }
 
     }, [cart, item.id])
-
 
     const handleDelete = (id) => {
         Alert.alert(
@@ -122,7 +120,6 @@ export const styles = StyleSheet.create({
         backgroundColor: 'red',
         borderRadius: 15,
     },
-
     updateButton: {
         padding: 10,
         paddingHorizontal: 15,

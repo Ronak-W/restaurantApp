@@ -1,21 +1,46 @@
-import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, Modal, Alert } from 'react-native'
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import IncrementDecrementButton from './IncrementDecrementButton';
-import AddCartButton from './AddCartButton';
-import { useDispatch } from 'react-redux';
 import { clearCart } from '../redux/cartSlice';
-import { Alert } from 'react-native';
-
+import RazorpayCheckout from 'react-native-razorpay';
+import { RAZORPAY_KEY_ID } from '@env'
 
 const Cart = () => {
-
     const cart = useSelector((state) => state.cart.cart);
-    console.log("CART", cart);
-
     const totalItems = useSelector((state) => state.cart.totalItems)
     const totalPrice = useSelector((state) => state.cart.totalPrice)
     const dispatch = useDispatch();
+
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const handlePayment = () => {
+        // console.log("PAYMENT CLICKED");
+        var options = {
+            description: 'Payment for the food item',
+            image: 'https://www.pngarts.com/files/3/Food-PNG-Pic.png',
+            currency: 'INR',
+            key: RAZORPAY_KEY_ID,
+            amount: totalPrice * 100,
+            name: 'Food Hub',
+            order_id: '',
+            prefill: {
+                email: 'vaghelaronak7501@gmail.com',
+                contact: '9022463880',
+                name: 'Ronak Waghela'
+            },
+            theme: { color: '#2b2c2b' }
+        }
+
+        RazorpayCheckout.open(options).then((data) => {
+            Alert.alert(`Success: ${data.razorpay_payment_id}`);
+            dispatch(clearCart());
+            // console.log(`Success: ${data.razorpay_payment_id}`);
+        }).catch((error) => {
+            console.log("ERROR", error);
+            Alert.alert(`Payment Failed`);
+        });
+    }
 
     const handleClearCart = () => {
         Alert.alert(
@@ -32,9 +57,16 @@ const Cart = () => {
                 }
             ]
         )
-
-        // console.log("CLEAR CART");
     }
+
+    const handleCheckout = () => {
+        setModalVisible(true);
+    };
+
+    const handleContinue = () => {
+        handlePayment();
+        setModalVisible(false);
+    };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -56,25 +88,56 @@ const Cart = () => {
                         </View>
                     ))}
                     <View style={styles.totalPriceContainer}>
-                        <Text style={styles.totalPriceText}>Total Items : {totalItems}</Text>
-                        <Text style={styles.totalPriceText}>Total Price: ₹{parseInt(totalPrice).toFixed(2)}</Text>
+                        <View style={{ display: 'flex', alignItems: 'flex-start' }}>
+                            <Text style={styles.totalKey}>Total Items</Text>
+                            <Text style={styles.totalKey}>Tax & Fees</Text>
+                            <Text style={styles.totalKey}>Delivery</Text>
+                            <Text style={styles.totalKey}>Total Price</Text>
+                        </View>
+                        <View style={{ display: 'flex', alignItems: 'flex-end' }}>
+                            <Text style={styles.totalPriceText}>{totalItems}</Text>
+                            <Text style={styles.totalPriceText}>₹ 0.00</Text>
+                            <Text style={styles.totalPriceText}>Free</Text>
+                            <Text style={styles.totalPriceText}>₹ {parseInt(totalPrice).toFixed(2)}</Text>
+                        </View>
                     </View>
 
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => handleClearCart()} style={styles.clearButton}>
                             <Text style={styles.paymentText}>Clear Cart</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.paymentButton}>
-                            <Text style={styles.paymentText}>Payment</Text>
+                        <TouchableOpacity style={styles.paymentButton} onPress={() => handleCheckout()}>
+                            <Text style={styles.paymentText}>Pay</Text>
                         </TouchableOpacity>
                     </View>
                 </>
             )}
+
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalText}>Do you want to checkout?</Text>
+                        <View style={styles.modalButtons}>
+                            <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
+                                <Text style={styles.buttonText}>Cancel</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.button} onPress={() => handleContinue()}>
+                                <Text style={styles.buttonText}>Continue</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </ScrollView>
     )
 }
 
-export default Cart
+export default Cart;
 
 const styles = StyleSheet.create({
     container: {
@@ -121,17 +184,17 @@ const styles = StyleSheet.create({
     },
     totalPriceContainer: {
         display: 'flex',
-        alignItems: 'flex-start',
-        marginTop: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         padding: 15,
         borderBottomWidth: 1,
         borderBlockColor: "white",
         borderRadius: 10,
     },
     totalPriceText: {
-        color: '#fff',
-        fontSize: 20,
-        fontWeight: '400',
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 500,
     },
     paymentButton: {
         display: 'flex',
@@ -161,5 +224,43 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around'
+    },
+    totalKey: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '200'
+    },
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 10,
+        width: '80%',
+        alignItems: 'center',
+    },
+    modalText: {
+        fontSize: 18,
+        marginBottom: 20,
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+    },
+    button: {
+        backgroundColor: '#2b2c2b',
+        padding: 10,
+        borderRadius: 5,
+        width: '40%',
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
     }
 })

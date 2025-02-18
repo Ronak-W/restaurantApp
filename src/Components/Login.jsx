@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         display: 'flex',
-        // backgroundColor: 'yellow',
         width: '90%'
     },
     textStyle: {

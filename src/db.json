@@ -83,6 +83,12 @@
       "name": "Poha",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAgoyaOo6lfIyZcmRjaHsgbgK6LGEcmQ0J6hM7pt5aKkbck4KOZ6kPK70&s=10",
       "price": "30.0"
+    },
+    {
+      "id": "09de",
+      "name": "Pasta",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBBoK_XGwSpk1emRk-rWLGYRqHS3iLWoUbHTzniXJ8I85kd7EFNbv96hPf&s=10",
+      "price": "120"
     }
   ]
 }

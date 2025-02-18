@@ -90,7 +90,7 @@ const Home = () => {
             </View>
             <View style={styles.heading}>
                 <Text style={styles.headingText}>Food Items</Text>
-                {loggedInUser.user == 'user' && (
+                {loggedInUser.user === 'user' && (
                     //cart
                     <View>
                         <TouchableOpacity activeOpacity={0.3} onPress={() => openBottomSheet()}>
@@ -114,9 +114,11 @@ const Home = () => {
             {isVisible && <BottomSheet onCancel={() => setIsVisible(false)} />}
 
             {/* Add Icon for admin */}
-            {loggedInUser.user === 'admin' && (<TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('ItemForm', { item: '' })}>
-                <Image style={styles.addIcon} source={{ uri: "https://cdn-icons-png.flaticon.com/512/4677/4677490.png" }} />
-            </TouchableOpacity>)}
+            {loggedInUser.user === 'admin' && (
+                <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('ItemForm', { item: '' })}
+                >
+                    <Image style={styles.addIcon} source={{ uri: "https://cdn-icons-png.flaticon.com/512/4677/4677490.png" }} />
+                </TouchableOpacity>)}
         </View>
     )
 }

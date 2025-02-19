@@ -11,7 +11,6 @@ const IncrementDecrementButton = ({ item }) => {
 
     const handleAddToCart = () => {
         dispatch(addToCart(item));
-        // console.log('ADDED', item);
     }
 
     const handleRemoveFromCart = () => {

@@ -1,27 +1,19 @@
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated, Alert, } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Card from './Card'
 import BottomSheet from './BottomSheet'
 import { useSelector } from 'react-redux'
-import { useFocusEffect } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { fetchData } from '../redux/fetchDataSlice'
 import { useNavigation } from '@react-navigation/native'
 
 const Home = () => {
 
-    //for bottomsheet
     const [isVisible, setIsVisible] = useState(false);
     const translateY = new Animated.Value(1000);
-
-    //cart from store
     const cart = useSelector((state) => state.cart);
-    //all data from store
     const fetchedData = useSelector(state => state.fetch.foodItems);
-
     const loggedInUser = useSelector(state => state.user)
-    // console.log("LOGGED IN USER", loggedInUser);
-
     const dispatch = useDispatch();
     const totalItems = cart.cart.length;
     const navigation = useNavigation();
@@ -30,13 +22,6 @@ const Home = () => {
     useEffect(() => {
         dispatch(fetchData());
     }, [])
-
-    //to close the bottom sheet when in focus
-    useFocusEffect(
-        React.useCallback(() => {
-            closeBottomSheet();
-        }, [])
-    )
 
     const openBottomSheet = () => {
         setIsVisible(true);
@@ -50,7 +35,7 @@ const Home = () => {
     const closeBottomSheet = () => {
         Animated.timing(translateY, {
             toValue: 1000,
-            duration: 300,
+            duration: 200,
             useNativeDriver: true,
         }).start(() => {
             setIsVisible(false);
@@ -78,20 +63,17 @@ const Home = () => {
         <View style={styles.mainContainer}>
             <View style={styles.imageContainer}>
                 <Image style={styles.image} source={require('../assests/images/Media.jpg')} resizeMode='cover' />
-                {/* <Image style={styles.image} source={{ uri: "https://t3.ftcdn.net/jpg/02/52/38/80/360_F_252388016_KjPnB9vglSCuUJAumCDNbmMzGdzPAucK.jpg" }} resizeMode='cover' /> */}
-
                 <View style={styles.overlay}>
                     <TouchableOpacity style={styles.userAdminIcon} activeOpacity={0.7} onPress={() => handleLogout()}>
-                        {/* <View style={styles.userAdminIcon}> */}
                         <Text style={styles.userAdminText}>{loggedInUser.user === "user" ? 'U' : 'A'}</Text>
-                        {/* </View> */}
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={styles.heading}>
                 <Text style={styles.headingText}>Food Items</Text>
                 {loggedInUser.user === 'user' && (
-                    //cart
+
+                    // Cart
                     <View>
                         <TouchableOpacity activeOpacity={0.3} onPress={() => openBottomSheet()}>
                             <Image style={styles.cartIcon} source={require('../assests/images/cart.png')} />
@@ -111,7 +93,7 @@ const Home = () => {
             />
 
             {/* bottom sheet */}
-            {isVisible && <BottomSheet onCancel={() => setIsVisible(false)} />}
+            {isVisible && <BottomSheet onCancel={() => closeBottomSheet()} />}
 
             {/* Add Icon for admin */}
             {loggedInUser.user === 'admin' && (

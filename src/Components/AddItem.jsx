@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addData, updateData } from '../redux/fetchDataSlice';
 import { useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import BottomSheet from './BottomSheet';
 import { Image } from 'react-native';
 
 const AddItem = ({ item }) => {
@@ -19,7 +18,7 @@ const AddItem = ({ item }) => {
         price: item ? item.price : ''
     });
 
-    //for updating the form items item should be visible already
+    //To populate the form fileds to update
     useEffect(() => {
         if (item) {
             setFormData({
@@ -35,7 +34,6 @@ const AddItem = ({ item }) => {
             ...prevData,
             [field]: value
         }));
-
     };
 
     const handleAddItem = () => {
@@ -55,7 +53,6 @@ const AddItem = ({ item }) => {
         //to update if item and it's id is present 
         if (item && item.id) {
             dispatch(updateData({ ...formData, id: item.id }));
-            // console.log("UPDATEE DATA");
             Alert.alert("Food Item Updated Successfully!")
             navigation.navigate('Home')
         } else {

@@ -89,6 +89,12 @@
       "name": "Pasta",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBBoK_XGwSpk1emRk-rWLGYRqHS3iLWoUbHTzniXJ8I85kd7EFNbv96hPf&s=10",
       "price": "120"
+    },
+    {
+      "id": "0932",
+      "name": "Oreo Shake",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVNjainIxtSn9bSoDQTgJHVdQvKsYlJBmvRNg2c_j2PxqTgXVun2tLZyNh&s=10",
+      "price": "50.0"
     }
   ]
 }

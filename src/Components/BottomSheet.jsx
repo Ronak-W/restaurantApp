@@ -6,14 +6,19 @@ const BottomSheet = ({ onCancel }) => {
 
     const navigation = useNavigation();
 
+    const handleCloseBottomSheet = () => {
+        onCancel();
+        navigation.navigate('Cart')
+    }
+
     return (
         <View style={styles.bottomSheet}>
             <Text style={styles.goToCart}>Go to Cart ?</Text>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={onCancel} style={styles.cancelButton}>
+                <TouchableOpacity onPress={() => onCancel()} style={styles.cancelButton}>
                     <Text style={styles.textStyle}>Cancel</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Cart')} style={styles.continueButton}>
+                <TouchableOpacity onPress={() => handleCloseBottomSheet()} style={styles.continueButton}>
                     <Text style={styles.textStyle}>Continue</Text>
                 </TouchableOpacity>
             </View>

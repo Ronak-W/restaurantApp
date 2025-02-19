@@ -5,17 +5,18 @@ import IncrementDecrementButton from './IncrementDecrementButton';
 import { clearCart } from '../redux/cartSlice';
 import RazorpayCheckout from 'react-native-razorpay';
 import { RAZORPAY_KEY_ID } from '@env'
+import { useNavigation } from '@react-navigation/native';
 
 const Cart = () => {
     const cart = useSelector((state) => state.cart.cart);
     const totalItems = useSelector((state) => state.cart.totalItems)
     const totalPrice = useSelector((state) => state.cart.totalPrice)
     const dispatch = useDispatch();
+    const navigation = useNavigation();
 
     const [modalVisible, setModalVisible] = useState(false);
 
     const handlePayment = () => {
-        // console.log("PAYMENT CLICKED");
         var options = {
             description: 'Payment for the food item',
             image: 'https://www.pngarts.com/files/3/Food-PNG-Pic.png',
@@ -32,14 +33,12 @@ const Cart = () => {
             theme: { color: '#2b2c2b' }
         }
 
-        RazorpayCheckout.open(options).then((data) => {
-            Alert.alert(`Success: ${data.razorpay_payment_id}`);
+        RazorpayCheckout.open(options).then(() => {
             dispatch(clearCart());
-            // console.log(`Success: ${data.razorpay_payment_id}`);
-        }).catch((error) => {
-            console.log("ERROR", error);
-            Alert.alert(`Payment Failed`);
-        });
+            navigation.navigate('Payment Result', { result: true })
+        }).catch(() => {
+            navigation.navigate('Payment Result', { result: false })
+        })
     }
 
     const handleClearCart = () => {
@@ -264,3 +263,4 @@ const styles = StyleSheet.create({
         fontSize: 16,
     }
 })
+

@@ -9,22 +9,19 @@ import { useNavigation } from '@react-navigation/native'
 
 const Card = ({ item }) => {
 
-    const dispatch = useDispatch();
-    const cart = useSelector(state => state.cart.cart);
     const [addedToCart, setAddedToCart] = useState(false);
-    const navigation = useNavigation();
-
+    const cart = useSelector(state => state.cart.cart);
     const loggedInUser = useSelector(state => state.user)
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (cart.length > 0) {
             const itemInCart = cart?.find((cartItem) => cartItem.id === item.id);
-            // console.log("ITEM IN CART", itemInCart);
             if (itemInCart) {
                 setAddedToCart(true);
             }
         }
-
     }, [cart, item.id])
 
     const handleDelete = (id) => {
@@ -41,7 +38,6 @@ const Card = ({ item }) => {
                 }
             ]
         )
-        // console.log("DELETE ID", id);
     }
 
     return (
@@ -53,9 +49,7 @@ const Card = ({ item }) => {
 
                 {loggedInUser.user === 'user' && (
                     !addedToCart ? (
-                        <TouchableOpacity >
-                            <AddCartButton item={item} />
-                        </TouchableOpacity>
+                        <AddCartButton item={item} />
                     ) : (
                         <IncrementDecrementButton item={item} />
                     )

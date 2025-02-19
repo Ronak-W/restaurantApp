@@ -9,7 +9,6 @@ const AddCartButton = ({ item }) => {
 
     const handleAddToCart = () => {
         dispatch(addToCart(item));
-        // console.log('ADDED', item);
     }
 
     return (

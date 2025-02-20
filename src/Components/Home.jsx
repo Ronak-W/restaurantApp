@@ -18,7 +18,7 @@ const Home = () => {
     const totalItems = cart.cart.length;
     const navigation = useNavigation();
 
-    //to fetch the data from store into the home screen
+    //To fetch the data from store into the home screen
     useEffect(() => {
         dispatch(fetchData());
     }, [])
@@ -95,6 +95,8 @@ const Home = () => {
             {/* bottom sheet */}
             {isVisible && <BottomSheet onCancel={() => closeBottomSheet()} />}
 
+            {isVisible && <View style={styles.overlayForBottomSheet}></View>}
+
             {/* Add Icon for admin */}
             {loggedInUser.user === 'admin' && (
                 <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('ItemForm', { item: '' })}
@@ -128,6 +130,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(236, 72, 72, 0.3)',
         borderBottomLeftRadius: 40,
         borderBottomRightRadius: 40,
+    },
+    overlayForBottomSheet: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        height: '77%'
     },
     heading: {
         display: 'flex',

@@ -1,5 +1,4 @@
 import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
 import AddCartButton from './AddCartButton'
 import IncrementDecrementButton from './IncrementDecrementButton'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,6 +14,8 @@ const Card = ({ item }) => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
+
+    //To conditional render the add and incrementDecrement Button
     useEffect(() => {
         if (cart.length > 0) {
             const itemInCart = cart?.find((cartItem) => cartItem.id === item.id);

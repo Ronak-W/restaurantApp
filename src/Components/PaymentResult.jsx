@@ -19,6 +19,7 @@ const PaymentResult = ({ result }) => {
                             style={{ height: 400, width: 400 }}
                             source={require('../assests/animations/success.json')}
                             autoPlay
+                            loop={false}
                         /></View></>) : (
                 <View style={styles.failedContainer}>
                     <View>
@@ -28,6 +29,7 @@ const PaymentResult = ({ result }) => {
                         style={{ height: 100, width: 100 }}
                         source={require('../assests/animations/failed.json')}
                         autoPlay
+                        loop={false}
                     />
                 </View>
             )}

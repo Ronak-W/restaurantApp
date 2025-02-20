@@ -15,7 +15,6 @@ export const fetchData = createAsyncThunk('Fetch Data', async () => {
 })
 
 export const addData = createAsyncThunk('Add Data', async (item) => {
-    // console.log("ITEM", item);
     try {
         const response = await axios.post('http://172.16.0.104:3000/foodItems', item)
         return response.data;
@@ -26,9 +25,7 @@ export const addData = createAsyncThunk('Add Data', async (item) => {
 
 export const updateData = createAsyncThunk('Update Data', async (item) => {
     const {id, name, image, price} = item;
-    // console.log("UPDATE DATA", id, name, image, price);
     try {
-        // console.log('UPDATED ITEM', item);
         const response = await axios.put(`http://172.16.0.104:3000/foodItems/${id}`, {name, image,price})
         return response.data;
     } catch (error) {
@@ -37,7 +34,6 @@ export const updateData = createAsyncThunk('Update Data', async (item) => {
 })
 
 export const deleteData = createAsyncThunk('Delete Data', async (id) => {
-    // console.log("IDDD", id);
     try {
         const response = await axios.delete(`http://172.16.0.104:3000/foodItems/${id}`)
         return response.data;
@@ -52,7 +48,6 @@ const fetchSlice = createSlice({
     extraReducers: builder => {
         // fetch
         builder.addCase(fetchData.fulfilled, (state,action) => {
-            // console.log("from slice",action.payload)
             state.foodItems = action.payload
         })
         

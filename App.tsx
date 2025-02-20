@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import AddItemScreen from './src/screens/AddItemScreen'
 import LoginScreen from './src/screens/LoginScreen'
 import PaymentResultScreen from './src/screens/PaymentResultScreen'
+import SignupScreen from './src/screens/SignupScreen'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 const App = () => {
@@ -19,7 +20,8 @@ const App = () => {
     <SafeAreaProvider>
     <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
+      <Stack.Navigator initialRouteName='Signup'>
+        <Stack.Screen name='Signup' component={SignupScreen} options={{headerShown : false}}/>
         <Stack.Screen name='Login' component={LoginScreen} options={{headerShown : false}}/>
         <Stack.Screen name='Home' component={HomeScreen} options={{headerShown : false}}/>
         <Stack.Screen name='Cart' component={CartScreen} options={{headerStyle : {backgroundColor : 'black'}, headerTintColor : 'white'}}/>

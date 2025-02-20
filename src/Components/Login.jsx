@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/userSlice';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { getAuth, signInWithEmailAndPassword } from '@react-native-firebase/auth';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -23,17 +24,26 @@ const Login = () => {
     const handleLogin = () => {
         const { email, password } = user;
 
-        if (email === "admin@gmail.com" && password === "admin") {
-            dispatch(login('admin'));
-            Alert.alert("Admin Logged In !")
-            navigation.navigate('Home')
-        } else if (email === "user@gmail.com" && password === "user") {
-            dispatch(login('user'));
-            Alert.alert("User Logged In !")
-            navigation.navigate('Home');
-        } else {
-            Alert.alert("Please Enter Valid Credentials")
-        }
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                if (email === "admin@gmail.com" && password === "admin123") {
+                    dispatch(login('admin'));
+                    Alert.alert("Admin Logged In Successfully!")
+                    navigation.navigate('Home')
+                    return;
+                } else {
+                    dispatch(login('user'))
+                    Alert.alert("User Logged In Successfully!")
+                    navigation.navigate('Home')
+                }
+            }).catch((error) => {
+                if (error.code === "auth/invalid-credential") {
+                    Alert.alert("Invalid credentials")
+                } else {
+                    Alert.alert("Please enter all the credentials!");
+                }
+            })
     };
 
     return (
@@ -62,6 +72,12 @@ const Login = () => {
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
             </View>
+
+            <TouchableOpacity style={styles.alreadyExistsContainer} onPress={() => navigation.navigate('Signup')}>
+                <Text style={{ color: 'white', fontWeight: '500' }}>
+                    Don't have an account ? <Text>Sign up</Text>
+                </Text>
+            </TouchableOpacity>
 
         </View>
     );
@@ -111,6 +127,11 @@ const styles = StyleSheet.create({
         marginTop: 10,
         textAlign: 'center',
     },
+    alreadyExistsContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        marginTop: 15
+    }
 });
 
 export default Login;
